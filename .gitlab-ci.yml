@@ -1,0 +1,23 @@
+image: node:latest
+
+states:
+  - install
+  - build
+
+install-frontend:
+  stage: install
+  script:
+    - cd frontend && npm install
+  artifacts:
+    paths:
+      - node_modules/
+
+build-frontend:
+  stage: build
+  script:
+    - CI=false cd frontend && npm run build
+  artifacts:
+    paths:
+      - build
+  dependencies:
+    - install
