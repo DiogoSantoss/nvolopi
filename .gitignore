@@ -141,4 +141,8 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+# Sensitive info
+.tfvars
+infra/*.json
+
 # End of https://www.toptal.com/developers/gitignore/api/node

@@ -1,15 +1,11 @@
-resource "google_service_account" "default" {
-  account_id   = "service_account_id"
-  display_name = "Service Account"
-}
-
-resource "google_compute_instance" "backend_upload" {
-  name         = "backend_upload"
-  machine_type = "e2-medium"
-  zone         = "europe-southwest1-a"
+resource "google_compute_instance" "backend-upload" {
+  name         = "backend-upload"
+  machine_type = var.machine_type
+  zone         = var.zone
 
   boot_disk {
     initialize_params {
+      # TODO: Change to our own Docker image
       image = "debian-cloud/debian-11"
       labels = {
         my_label = "value"
@@ -41,15 +37,18 @@ resource "google_compute_instance" "backend_upload" {
     email  = google_service_account.default.email
     scopes = ["cloud-platform"]
   }
+
+  tags = ["upload"]
 }
 
-resource "google_compute_instance" "backend_download" {
-  name         = "backend_download"
-  machine_type = "e2-medium"
-  zone         = "europe-southwest1-a"
+resource "google_compute_instance" "backend-download" {
+  name         = "backend-download"
+  machine_type = var.machine_type
+  zone         = var.zone
 
   boot_disk {
     initialize_params {
+      # TODO: Change to our own Docker image
       image = "debian-cloud/debian-11"
       labels = {
         my_label = "value"
@@ -81,4 +80,6 @@ resource "google_compute_instance" "backend_download" {
     email  = google_service_account.default.email
     scopes = ["cloud-platform"]
   }
+
+  tags = ["download"]
 }
