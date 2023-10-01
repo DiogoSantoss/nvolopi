@@ -1,8 +1,8 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 
-const MONGO_URI = 'mongodb://localhost:27017/nvolopi';
+const MONGO_URI = process.env.MONGO_URI;
 
-exports.connect = () => {
+function connect() {
   // Connecting to the database
   mongoose
     .connect(MONGO_URI, {
@@ -18,3 +18,9 @@ exports.connect = () => {
       process.exit(1);
     });
 };
+
+const db = {
+  connect
+}
+
+export default db;
