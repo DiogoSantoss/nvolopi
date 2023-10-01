@@ -1,16 +1,14 @@
-variable "credentials"	{}
-
-variable "project" {}
+variable "credentials-file" {}
 
 variable "region" {
-    default = "europe-southwest1"
+  default = "europe-southwest1"
 }
 
-variable "zone"	{
-    default = "europe-southwest1-a"
+variable "zone" {
+  default = "europe-southwest1-a"
 }
 
-variable "machine_type"	{
-    # Should be enough
-    default = "e2-medium"
+variable "machine_type" {
+  # Should be enough
+  default = "e2-medium"
 }
