@@ -8,16 +8,17 @@ resource "google_storage_bucket" "static_website" {
   }
 }
 
-# St
 resource "google_storage_bucket_object" "static_website_src" {
-  name   = "index.html"
-  source = "../frontend/public/index.html"
+  for_each = fileset("../frontend/build/", "**")
+  name   = each.value
+  source = "../frontend/build/${each.value}"
   bucket = google_storage_bucket.static_website.name
 }
 
 # Make new objects public
 resource "google_storage_object_access_control" "public_rule" {
-  object = google_storage_bucket_object.static_website_src.output_name
+  for_each = google_storage_bucket_object.static_website_src
+  object = each.value.output_name
   bucket = google_storage_bucket.static_website.name
   role   = "READER"
   entity = "allUsers"
