@@ -11,6 +11,7 @@ install-frontend:
   artifacts:
     paths:
       - node_modules/
+  when: manual
 
 build-frontend:
   stage: build
@@ -19,3 +20,4 @@ build-frontend:
   artifacts:
     paths:
       - build
+  when: manual
