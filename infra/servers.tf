@@ -40,3 +40,42 @@ resource "google_compute_instance" "backend" {
   }
 
 }
+
+resource "google_compute_instance" "frontend" {
+  name         = "frontend"
+  machine_type = var.machine_type
+  zone         = var.zone
+
+  boot_disk {
+    initialize_params {
+      # TODO: Change to our own Docker image
+      image = "eu.gcr.io/${local.credentials.project_id}/${var.image-name}:latest"
+      labels = {
+        my_label = "value"
+      }
+    }
+  }
+
+  tags = ["backend"]
+
+  network_interface {
+    network = "default"
+
+    access_config {
+      // Ephemeral public IP
+    }
+  }
+
+  metadata = {
+    foo = "bar"
+  }
+
+  metadata_startup_script = "echo 'hello from the frontend microservice :D'"
+
+  service_account {
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+    email  = data.google_service_account.default.email
+    scopes = ["cloud-platform"]
+  }
+
+}

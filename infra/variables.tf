@@ -12,3 +12,7 @@ variable "machine_type" {
   # Should be enough
   default = "e2-medium"
 }
+
+variable "image-name" {
+  default = "nvolopi"
+}

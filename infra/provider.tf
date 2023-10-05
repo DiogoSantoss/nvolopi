@@ -1,5 +1,3 @@
-# Terraform Openstack (VM Cloud) multi tier deployment
-
 #Debugging
 #OS_DEBUG=1
 #TF_LOG=DEBUG
