@@ -28,10 +28,8 @@ resource "google_compute_instance" "backend" {
   }
 
   metadata = {
-    foo = "bar"
+    ssh-keys = "ubuntu:${file("/home/vagrant/.ssh/id_rsa.pub")}"
   }
-
-  metadata_startup_script = "echo 'hello from the backend microservice :D'"
 
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
@@ -49,7 +47,8 @@ resource "google_compute_instance" "frontend" {
   boot_disk {
     initialize_params {
       # TODO: Change to our own Docker image
-      image = "eu.gcr.io/${local.credentials.project_id}/${var.image-name}:latest"
+      #image = "eu.gcr.io/${local.credentials.project_id}/${var.image-name}:latest"
+      image = "debian-cloud/debian-11"
       labels = {
         my_label = "value"
       }
@@ -67,10 +66,8 @@ resource "google_compute_instance" "frontend" {
   }
 
   metadata = {
-    foo = "bar"
+    ssh-keys = "ubuntu:${file("/home/vagrant/.ssh/id_rsa.pub")}"
   }
-
-  metadata_startup_script = "echo 'hello from the frontend microservice :D'"
 
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.

@@ -20,8 +20,6 @@ sudo apt-get install -y gnupg
 # required for SDKs
 sudo apt-get -y install python3-dev 
 sudo apt-get -y install python3-pip
-# Add snap installer
-sudo apt-get -y install snapd
 
 # Add graph builder tool for Terraform
 sudo apt-get -y install graphviz
@@ -57,8 +55,7 @@ sudo apt-get -y install google-cloud-sdk
 sudo apt-get -y install kubectl google-cloud-sdk-gke-gcloud-auth-plugin
 
 # Generate ssh key
-ssh-keygen -t rsa -b 4096 -f ${HOME}/.ssh -N ""
+ssh-keygen -t rsa -b 4096 -f /home/vagrant/.ssh/id_rsa -N ""
 
 # Clean up cached packages
 sudo apt-get clean all
-sudo rm ./awscliv2.zip

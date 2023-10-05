@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
         # docker.create_args = ["--platform=linux/arm64"]     
       end
   
-      mgdock.vm.synced_folder "../", "/home/vagrant/labs", docker_consistency: "cached"
+      mgdock.vm.synced_folder ".", "/home/vagrant/infra", docker_consistency: "cached"
       # Provisioning
       mgdock.vm.provision "shell", inline: 'sudo apt-get -y update; sudo apt-get -y install sl'
       mgdock.vm.provision :shell, path: "bootstrap-mgmt.sh"
