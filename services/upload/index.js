@@ -2,9 +2,12 @@ import express from "express";
 import http from "http";
 import multer from "multer";
 import bodyParser from "body-parser";
+import { Authenticator, Authorizator } from "nvolopi-common";
 
 const app = express();
 const server = http.createServer(app);
+const authenticator = Authenticator("<url>");
+const authorizator = Authorizator("<url>");
 const SIZE_LIMIT = 5 << 30;
 const port = "3000";
 
@@ -17,7 +20,7 @@ const upload = multer({
   },
 });
 
-app.post("/upload", (req, res) => {
+app.post("/upload", authenticator, authorizator, (req, res) => {
   // need to check if user is authenticated
   // if file exists
   // if all allowed exist ( maybe not )
