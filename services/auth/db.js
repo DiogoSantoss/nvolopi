@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -17,10 +17,10 @@ function connect() {
       console.error(error);
       process.exit(1);
     });
-};
+}
 
 const db = {
-  connect
-}
+  connect,
+};
 
 export default db;

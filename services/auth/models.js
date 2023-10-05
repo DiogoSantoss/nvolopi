@@ -6,5 +6,5 @@ const userSchema = new mongoose.Schema({
 });
 
 export default {
-  "User": mongoose.model("user", userSchema),
-}
+  User: mongoose.model("user", userSchema),
+};
