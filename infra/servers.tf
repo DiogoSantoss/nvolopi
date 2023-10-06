@@ -9,7 +9,6 @@ resource "google_compute_instance" "backend" {
 
   boot_disk {
     initialize_params {
-      # TODO: Change to our own Docker image
       image = "debian-cloud/debian-11"
       labels = {
         my_label = "value"
@@ -36,7 +35,6 @@ resource "google_compute_instance" "backend" {
     email  = data.google_service_account.default.email
     scopes = ["cloud-platform"]
   }
-
 }
 
 resource "google_compute_instance" "frontend" {
@@ -46,16 +44,12 @@ resource "google_compute_instance" "frontend" {
 
   boot_disk {
     initialize_params {
-      # TODO: Change to our own Docker image
-      #image = "eu.gcr.io/${local.credentials.project_id}/${var.image-name}:latest"
-      image = "debian-cloud/debian-11"
-      labels = {
-        my_label = "value"
-      }
+      image = "gcr.io/${local.credentials.project_id}/frontend:0.1"
+      #image = "debian-cloud/debian-11"
     }
   }
 
-  tags = ["backend"]
+  tags = ["frontend"]
 
   network_interface {
     network = "default"
@@ -74,5 +68,4 @@ resource "google_compute_instance" "frontend" {
     email  = data.google_service_account.default.email
     scopes = ["cloud-platform"]
   }
-
 }
