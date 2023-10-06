@@ -44,8 +44,7 @@ resource "google_compute_instance" "frontend" {
 
   boot_disk {
     initialize_params {
-      image = "gcr.io/${local.credentials.project_id}/frontend:0.1"
-      #image = "debian-cloud/debian-11"
+      image = "debian-cloud/debian-11"
     }
   }
 
@@ -67,5 +66,18 @@ resource "google_compute_instance" "frontend" {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     email  = data.google_service_account.default.email
     scopes = ["cloud-platform"]
+  }
+
+  # TODO
+  provisioner "file" {
+    source = var.credentials-file
+    destination = "/tmp/test_file" # TODO
+
+    #connection {
+    #  type = "ssh"
+    #  user = "jon"
+    #  private_key = "${file("./creds/gcloud_instance")}"
+    #  agent = "false"
+    #}
   }
 }

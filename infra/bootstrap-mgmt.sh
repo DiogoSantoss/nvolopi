@@ -59,3 +59,7 @@ ssh-keygen -t rsa -b 4096 -f /home/vagrant/.ssh/id_rsa -N ""
 
 # Clean up cached packages
 sudo apt-get clean all
+
+# Deploy containers to the cloud-hosted VMs using Ansible
+cd /home/vagrant/infra
+ansible-playbook deploy-containers.yml

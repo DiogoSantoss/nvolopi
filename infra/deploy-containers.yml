@@ -1,0 +1,18 @@
+---
+- hosts: targets
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  remote_user: nvolopi
+
+  tasks:
+    - name: Log into Google Cloud
+      # TODO
+    
+    - name: Pull Docker containers from GCR
+      docker_container:
+        name: "{{ ansible_host }}"
+        image: "{{ container_name }}"
+        pull: yes
+        state: started
+        restart_policy: always
