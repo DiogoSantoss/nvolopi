@@ -7,11 +7,15 @@
 
   tasks:
     - name: Log into Google Cloud
-      # TODO
+      docker_login:
+        registry: https://gcr.io
+        username: _json_key
+        debug: true
+        password: " {{ lookup('file', '/home/vagrant/infra/studied-reason-400621-7f66018600a2.json')}}"
     
     - name: Pull Docker containers from GCR
       docker_container:
-        name: "{{ ansible_host }}"
+        name: "container"
         image: "{{ container_name }}"
         pull: yes
         state: started

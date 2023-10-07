@@ -26,6 +26,7 @@ resource "google_compute_instance" "backend" {
     }
   }
 
+  # Allow mgmt node to ssh into this instance
   metadata = {
     ssh-keys = "ubuntu:${file("/home/vagrant/.ssh/id_rsa.pub")}"
   }
@@ -58,6 +59,7 @@ resource "google_compute_instance" "frontend" {
     }
   }
 
+  # Allow mgmt node to ssh into this instance
   metadata = {
     ssh-keys = "ubuntu:${file("/home/vagrant/.ssh/id_rsa.pub")}"
   }
@@ -69,9 +71,9 @@ resource "google_compute_instance" "frontend" {
   }
 
   # TODO
-  provisioner "file" {
-    source = var.credentials-file
-    destination = "/tmp/test_file" # TODO
+  #provisioner "file" {
+  #  source = var.credentials-file
+  #  destination = "/tmp/test_file" # TODO
 
     #connection {
     #  type = "ssh"
@@ -79,5 +81,5 @@ resource "google_compute_instance" "frontend" {
     #  private_key = "${file("./creds/gcloud_instance")}"
     #  agent = "false"
     #}
-  }
+  #}
 }
