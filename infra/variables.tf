@@ -16,3 +16,7 @@ variable "machine_type" {
 variable "image-name" {
   default = "nvolopi"
 }
+
+variable "frontend-version" {
+  default = "0.1"
+}

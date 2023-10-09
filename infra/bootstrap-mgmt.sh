@@ -55,7 +55,7 @@ sudo apt-get -y install google-cloud-sdk
 sudo apt-get -y install kubectl google-cloud-sdk-gke-gcloud-auth-plugin
 
 # Generate ssh key
-ssh-keygen -t rsa -b 4096 -f /home/vagrant/.ssh/id_rsa -N ""
+su - vagrant -c  "ssh-keygen -t rsa -b 4096 -f /home/vagrant/.ssh/id_rsa -N ''"
 
 # Clean up cached packages
 sudo apt-get clean all

@@ -6,6 +6,7 @@ resource "google_compute_instance" "backend" {
   name         = "backend"
   machine_type = var.machine_type
   zone         = var.zone
+  tags = ["backend"]
 
   boot_disk {
     initialize_params {
@@ -16,8 +17,6 @@ resource "google_compute_instance" "backend" {
     }
   }
 
-  tags = ["backend"]
-
   network_interface {
     network = "default"
 
@@ -29,12 +28,6 @@ resource "google_compute_instance" "backend" {
   # Allow mgmt node to ssh into this instance
   metadata = {
     ssh-keys = "ubuntu:${file("/home/vagrant/.ssh/id_rsa.pub")}"
-  }
-
-  service_account {
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    email  = data.google_service_account.default.email
-    scopes = ["cloud-platform"]
   }
 }
 
@@ -42,14 +35,13 @@ resource "google_compute_instance" "frontend" {
   name         = "frontend"
   machine_type = var.machine_type
   zone         = var.zone
+  tags = ["frontend"]
 
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-11"
     }
   }
-
-  tags = ["frontend"]
 
   network_interface {
     network = "default"
@@ -63,23 +55,4 @@ resource "google_compute_instance" "frontend" {
   metadata = {
     ssh-keys = "ubuntu:${file("/home/vagrant/.ssh/id_rsa.pub")}"
   }
-
-  service_account {
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    email  = data.google_service_account.default.email
-    scopes = ["cloud-platform"]
-  }
-
-  # TODO
-  #provisioner "file" {
-  #  source = var.credentials-file
-  #  destination = "/tmp/test_file" # TODO
-
-    #connection {
-    #  type = "ssh"
-    #  user = "jon"
-    #  private_key = "${file("./creds/gcloud_instance")}"
-    #  agent = "false"
-    #}
-  #}
 }

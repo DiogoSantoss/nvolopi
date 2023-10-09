@@ -2,10 +2,16 @@
 - hosts: targets
   become: yes
   become_method: sudo
-  gather_facts: no
-  remote_user: nvolopi
+  gather_facts: True
+  remote_user: ubuntu
 
   tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
     - name: Log into Google Cloud
       docker_login:
         registry: https://gcr.io
@@ -13,10 +19,27 @@
         debug: true
         password: " {{ lookup('file', '/home/vagrant/infra/studied-reason-400621-7f66018600a2.json')}}"
     
-    - name: Pull Docker containers from GCR
+    - name: Pull Docker container from GCR
       docker_container:
         name: "container"
         image: "{{ container_name }}"
         pull: yes
         state: started
         restart_policy: always
+
+- hosts: frontend
+  become: yes
+  become_method: sudo
+  gather_facts: True
+  remote_user: ubuntu
+  
+  tasks:
+    - name: Run frontend container
+      docker_container:
+        name: "container"
+        image: "{{ container_name }}"
+        pull: yes
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
