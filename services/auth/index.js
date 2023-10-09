@@ -12,7 +12,7 @@ dotenv.config();
 db.connect(process.env.MONGO_URI);
 
 const port = process.env.PORT;
-const PRIV_KEY = fs.readFileSync(process.env.AUTH_PRIV_KEY).join("");
+const PRIV_KEY = fs.readFileSync(process.env.AUTH_PRIV_KEY);
 const JWT_EXPIRATION = 30 * 60 * 1000;
 
 const app = express();
@@ -59,7 +59,7 @@ app.post("/auth", async (req, res) => {
                 expiresAt: expiresAt.getTime(),
               },
               PRIV_KEY,
-              { algorithm: "HS512" }
+              { algorithm: "RS256" }
             );
             res.status(200).send(token);
           } else {

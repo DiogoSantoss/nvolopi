@@ -31,7 +31,7 @@ const checkAuth = async (req, res, next) => {
   }
 
   console.log(token)
-  const result = jwt.verify(token, AUTH_PUBLIC_KEY, { algorithms: ["HS512"] });
+  const result = jwt.verify(token, AUTH_PUBLIC_KEY, { algorithms: ["ES256"] });
 
   if (result.expiresAt > new Date().getTime()) {
     res.status(404).send();
