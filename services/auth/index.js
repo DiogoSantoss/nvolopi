@@ -3,15 +3,16 @@ import bodyParser from "body-parser";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import fs from "fs";
 
-import { User } from "./models";
-import db from "./db";
+import { User } from "./models.js";
+import db from "./db.js";
 
 dotenv.config();
-db.connect();
+db.connect(process.env.MONGO_URI);
 
 const port = process.env.PORT;
-const PRIV_KEY = process.env.PRIV_KEY;
+const PRIV_KEY = fs.readFileSync(process.env.AUTH_PRIV_KEY).join("");
 const JWT_EXPIRATION = 30 * 60 * 1000;
 
 const app = express();
@@ -20,14 +21,13 @@ app.use(bodyParser.json());
 app.post("/create", async (req, res) => {
   // assume request is correct, might be problematic
   const { email, password } = req.body;
+
   bcrypt
-    .hash(password)
-    .then(async (hashedPwd) => {
-      // always try to create user
-      // if email already in DB throw error
+    .hash(password, 10)
+    .then((hash) => {
       User.create({
         email,
-        password: hashedPwd,
+        password: hash,
       })
         .then(() => {
           res.status(200).send();
@@ -36,7 +36,9 @@ app.post("/create", async (req, res) => {
           res.status(400).send({ error: err });
         });
     })
-    .catch((err) => res.status(400).send({ error: err }));
+    .catch((err) => {
+      res.status(400).send({ error: err });
+    });
 });
 
 app.post("/auth", async (req, res) => {
@@ -57,6 +59,7 @@ app.post("/auth", async (req, res) => {
                 expiresAt: expiresAt.getTime(),
               },
               PRIV_KEY,
+              { algorithm: "HS512" }
             );
             res.status(200).send(token);
           } else {
