@@ -14,8 +14,7 @@ const Authorizator = (url) => ((req, res, next) => {
   next()
 });
 
-
-module.exports = {
+export {
   Authenticator,
-  Authorizator
-}
+  Authorizator  
+};

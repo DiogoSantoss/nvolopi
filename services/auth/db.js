@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-function connect(uri) {
+const connect = () => { 
   // Connecting to the database
   mongoose
-    .connect(uri, {
+    .connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
