@@ -3,13 +3,13 @@
 #TF_LOG=DEBUG
 
 locals {
-  credentials-file = file(var.credentials-file)
-  credentials      = jsondecode(local.credentials-file)
+  credentials_file = file(var.credentials_file)
+  credentials      = jsondecode(local.credentials_file)
 }
 
 provider "google" {
-  credentials = local.credentials-file
+  credentials = local.credentials_file
   project     = local.credentials.project_id
-  region      = var.region
-  zone        = var.zone
+  region      = var.gcp_region
+  zone        = var.gcp_zone
 }

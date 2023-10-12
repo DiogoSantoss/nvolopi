@@ -1,22 +1,40 @@
-variable "credentials-file" {}
+variable "credentials_file" {}
 
-variable "region" {
+###-----------------------------------------------------------------------------
+### GCP variables
+###-----------------------------------------------------------------------------
+
+variable "gcp_region" {
+  type = string
   default = "europe-southwest1"
 }
 
-variable "zone" {
+variable "gcp_zone" {
+  type = string
   default = "europe-southwest1-a"
 }
 
 variable "machine_type" {
+  type = string
   # Should be enough
   default = "e2-medium"
 }
 
-variable "image-name" {
-  default = "nvolopi"
+###-----------------------------------------------------------------------------
+### Docker image variables
+###-----------------------------------------------------------------------------
+
+variable "frontend_version" {
+  type = string
+  default = "0.1"
 }
 
-variable "frontend-version" {
+variable "upload_version" {
+  type = string
+  default = "0.1"
+}
+
+variable "auth_version" {
+  type = string
   default = "0.1"
 }

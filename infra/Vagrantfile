@@ -23,5 +23,9 @@ Vagrant.configure("2") do |config|
       # Do we want to run this script everytime the mgmt container is started?
       #mgdock.vm.provision :shell, path: "deploy-infra.sh"
     end
+    config.trigger.before :destroy do |trigger|
+      trigger.warn = "Running terraform destroy"
+      trigger.run_remote = {inline: "terraform destroy -auto-approve"}
+    end
   end
   

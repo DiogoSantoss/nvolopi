@@ -1,4 +1,5 @@
 ---
+
 - hosts: targets
   become: yes
   become_method: sudo
@@ -12,13 +13,35 @@
         state: present
         update_cache: yes
 
+- hosts: frontend:backend
+  become: yes
+  become_method: sudo
+  gather_facts: True
+  remote_user: ubuntu
+
+  tasks:
     - name: Log into Google Cloud
       docker_login:
         registry: https://gcr.io
         username: _json_key
         debug: true
         password: " {{ lookup('file', '/home/vagrant/infra/studied-reason-400621-7f66018600a2.json')}}"
-    
+
+- hosts: backend
+  become: yes
+  become_method: sudo
+  gather_facts: True
+  remote_user: ubuntu
+
+  tasks:
+    - name: Copy .env file
+      copy:
+        src: /home/vagrant/infra/.env
+        dest: /home/ubuntu/.env
+        owner: ubuntu
+        group: ubuntu
+        mode: 0644
+
     - name: Pull Docker container from GCR
       docker_container:
         name: "container"
@@ -26,6 +49,10 @@
         pull: yes
         state: started
         restart_policy: always
+        ports:
+          - "3001:3001"
+        volumes:
+          - /home/ubuntu/.env:/app/.env
 
 - hosts: frontend
   become: yes
@@ -43,3 +70,22 @@
         restart_policy: always
         ports:
           - "80:80"
+        volumes:
+          - /home/ubuntu/nginx.conf:/etc/nginx/conf.d
+
+- hosts: database
+  become: yes
+  become_method: sudo
+  gather_facts: True
+  remote_user: ubuntu
+  
+  tasks:
+    - name: Run database container
+      docker_container:
+        name: "container"
+        image: "mongo:latest"
+        pull: yes
+        state: started
+        restart_policy: always
+        ports:
+          - "27017:27017"
