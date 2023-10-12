@@ -27,14 +27,14 @@ const checkAuth = async (req, res, next) => {
   const token = auth && auth.split(" ")[1];
 
   if (token == undefined) {
-    res.status(404).send();
+    res.status(400).send();
   }
 
   console.log(token)
   const result = jwt.verify(token, AUTH_PUBLIC_KEY, { algorithms: ["ES256"] });
 
   if (result.expiresAt > new Date().getTime()) {
-    res.status(404).send();
+    res.status(400).send();
   }
 
   next();
