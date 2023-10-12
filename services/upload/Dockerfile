@@ -2,13 +2,12 @@ FROM node:20-alpine AS node
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY ./package.json .
 
 RUN npm install
 
-COPY index.js .
+COPY ./src .
 
-# Well well well
-EXPOSE 3000 
+EXPOSE 3001
 
-ENTRYPOINT ["npm","run","start-prod"]
+ENTRYPOINT ["npm","run","start"]
