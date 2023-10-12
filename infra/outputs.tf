@@ -58,11 +58,11 @@ server {
   }
 
   location /api/auth {
-      proxy_pass ${google_compute_instance.auth.network_interface.0.access_config.0.nat_ip};
+      proxy_pass http://${google_compute_instance.auth.network_interface.0.access_config.0.nat_ip};
   }
 
   location /api/upload {
-      proxy_pass ${google_compute_instance.upload.network_interface.0.access_config.0.nat_ip};
+      proxy_pass http://${google_compute_instance.upload.network_interface.0.access_config.0.nat_ip};
   }
 
 }
