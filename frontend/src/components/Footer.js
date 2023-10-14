@@ -65,8 +65,8 @@ function Footer() {
                     sx={{ mt: 5 }}
                 >
                     {"V3ry S3cur3 © "}
-                    <Link color="inherit" href="https://gitlab.com/DiogoSantoss/time-series-web-app">
-                        Gitlab
+                    <Link color="inherit" href="https://gitlab.rnl.tecnico.ulisboa.pt/agisit/agisit23-g15">
+                        Gitlab @ Instituto Superior Técnico
                     </Link>{" "}
                     {new Date().getFullYear()}.
                 </Typography>

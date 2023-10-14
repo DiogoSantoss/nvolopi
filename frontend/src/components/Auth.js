@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const Auth = () => {
-    const isLoggedIn = false;
+    const isLoggedIn = true;
     if (isLoggedIn) {
         return <Outlet />
     } else {
