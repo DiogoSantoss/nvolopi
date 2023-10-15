@@ -3,52 +3,56 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-const Login = () => {
-  /* Forward logged in user to main page */
-  const isLoggedIn = false;
+import { isLoggedIn } from "../context/Auth";
 
+const Login = () => {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [sending, setSending] = useState(false);
 
   const [error, setError] = useState("");
 
-  if (isLoggedIn) return <Navigate to="/upload" />;
+  if (isLoggedIn()) return <Navigate to="/upload" />;
 
   const handleLoginSubmit = async () => {
     setSending(true);
 
-    if (!username || !password) {
+    if (!email || !password) {
       setSending(false);
       return;
     }
 
     try {
       const response = await axios.post("http://localhost:3001/auth", {
-        email: username,
+        email: email,
         password: password,
       });
-      console.log(response);
+      const token = response.data;
+
+      // altamente inseguro
+      localStorage.setItem("token", token);
+
     } catch (err) {
       setError(err.message);
     } finally {
       setSending(false);
     }
   };
+  
   const handleCreateSubmit = async () => {
     setSending(true);
 
-    if (!username || !password) {
+    if (!email || !password) {
       setSending(false);
       return;
     }
 
     try {
       const response = await axios.post("http://localhost:3001/create", {
-        email: username,
+        email: email,
         password: password,
       });
       console.log(response);
@@ -77,13 +81,13 @@ const Login = () => {
             variant="filled"
             required
             fullWidth
-            id="username"
-            label={"Username"}
-            name="username"
-            autoComplete="username"
+            id="email"
+            label={"Email"}
+            name="email"
+            autoComplete="email"
             autoFocus
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -105,7 +109,7 @@ const Login = () => {
                 onClick={handleLoginSubmit}
                 variant="contained"
                 sx={{ mt: 3 }}
-                disabled={!username || !password}
+                disabled={!email || !password}
               >
                 {sending ? "Sending..." : "Login"}
               </Button>
@@ -116,7 +120,7 @@ const Login = () => {
                 onClick={handleCreateSubmit}
                 variant="contained"
                 sx={{ mt: 3 }}
-                disabled={!username || !password}
+                disabled={!email || !password}
               >
                 {sending ? "Sending..." : "Create"}
               </Button>

@@ -12,8 +12,7 @@ const footers = [
 	{
 		title: "Services",
 		description: [
-			{ name: "Overview", href: "/overview" },
-			{ name: "Time Series", href: "/time-series" },
+			{ name: "Upload", href: "/upload" },
 		],
 	},
 	{

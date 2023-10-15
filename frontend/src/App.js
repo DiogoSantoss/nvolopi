@@ -11,7 +11,8 @@ const App = () => {
     <>
       <Navbar />
       <Box
-        display="flex"7.0.0.1:3000exDirection="column"
+        display="flex"
+        flexDirection="column"
         alignItems="center"
         justifyContent="center"
         minHeight="70vh"
