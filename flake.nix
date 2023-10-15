@@ -7,7 +7,10 @@
   outputs = { nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import nixpkgs {
+          inherit system;
+          nixpkgs.config.allowUnfree = true;
+        };
       in
       {
         devShell = pkgs.mkShell {
@@ -18,6 +21,9 @@
             nodePackages.eslint
             mongosh
             openssl
+            vscode-fhs
+            minikube
+            kubectl
           ];
         };
       }

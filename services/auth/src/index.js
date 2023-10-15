@@ -10,18 +10,25 @@ import { User } from "./models.js";
 import db from "./db.js";
 
 dotenv.config();
-db.connect(process.env.MONGO_URI);
 
-const port = process.env.PORT;
+const MONGO_URI = process.env.MONGO_URI;
 const PRIV_KEY = fs.readFileSync(process.env.AUTH_PRIV_KEY);
 const JWT_EXPIRATION = 30 * 60 * 1000;
+const port = process.env.PORT;
+
+db.connect(MONGO_URI);
 
 const app = express();
 app.use(cors()); // for local development
 app.use(bodyParser.json());
 
+/**
+ * Create a new user in the database.
+ * Parameters:
+ * - email
+ * - password
+ */
 app.post("/create", async (req, res) => {
-  // assume request is correct, might be problematic
   const { email, password } = req.body;
 
   try {
@@ -33,17 +40,23 @@ app.post("/create", async (req, res) => {
   }
 });
 
+/**
+ * Login user and generate new JWT token.
+ * Parameters:
+ * - email
+ * - password
+ */
 app.post("/auth", async (req, res) => {
   // assume request is correct, might be problematic
   const { email, password } = req.body;
 
   try {
+
     const user = await User.findOne({ email: email });
-    // this await is necessary
     const valid = await bcrypt.compare(password, user.password);
+
     if (valid) {
-      console.log("here");
-      // generate jwt and send it back to the user
+
       const expiresAt = new Date();
       expiresAt.setTime(expiresAt.getTime() + JWT_EXPIRATION);
       const token = jwt.sign(
@@ -54,7 +67,6 @@ app.post("/auth", async (req, res) => {
         PRIV_KEY,
         { algorithm: "RS256" }
       );
-
       res.status(200).send(token);
     } else {
       res.status(401).send({ error: "Invalid credentials" });
@@ -68,10 +80,9 @@ app.post("/auth", async (req, res) => {
 // set as an http only cookie
 // maybe store it in the DB
 app.post("/refresh", (req, res) => {
-  console.log(req.body);
   res.send({ token: "token" });
 });
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`Auth service listening on port ${port}...`);
 });
