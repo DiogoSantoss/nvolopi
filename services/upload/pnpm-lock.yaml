@@ -23,9 +23,6 @@ dependencies:
   nodemon:
     specifier: ^3.0.1
     version: 3.0.1
-  nvolopi-common:
-    specifier: link:../common
-    version: link:../common
   socket.io:
     specifier: ^4.7.2
     version: 4.7.2
