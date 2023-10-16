@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const connect = () => { 
+const connect = () => {
   // Connecting to the database
   mongoose
     .connect(process.env.MONGO_URI, {
@@ -15,7 +15,7 @@ const connect = () => {
       console.error(error);
       process.exit(1);
     });
-}
+};
 
 const db = {
   connect,

@@ -34,14 +34,13 @@ const Login = () => {
 
       // altamente inseguro
       localStorage.setItem("token", token);
-
     } catch (err) {
       setError(err.message);
     } finally {
       setSending(false);
     }
   };
-  
+
   const handleCreateSubmit = async () => {
     setSending(true);
 

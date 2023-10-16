@@ -24,14 +24,15 @@ const Upload = () => {
       formData.append("allowed", allowed);
       formData.append("file", file);
 
-      await axios.post("http://localhost:3002/upload", formData, {
+      const response = await axios.post("http://localhost:3002/upload", formData, {
         headers: {
+          Authentication: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "multipart/form-data",
         },
       });
-    } catch (err) {
-      //setError("Error updating timeseries (" + err.message + ")");
-    }
+
+      console.log(response)
+    } catch (err) {}
   };
 
   const handleAllowedChange = (e) => {
@@ -52,7 +53,6 @@ const Upload = () => {
             <TextField
               onChange={handleAllowedChange}
               fullWidth
-              required
               autoComplete="email"
               autoFocus
               label="Share this with (email)..."

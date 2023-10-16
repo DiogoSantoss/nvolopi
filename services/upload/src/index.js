@@ -12,7 +12,7 @@ import db from "./db.js";
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI;
-const SIZE_LIMIT = 1 << 20;
+const SIZE_LIMIT = 5 << 20;
 const AUTH_PUBLIC_KEY = fs.readFileSync(process.env.AUTH_PUBLIC_KEY);
 const PORT = process.env.PORT;
 
@@ -31,18 +31,19 @@ const upload = multer({
 
 // Authentication middleware
 const checkAuth = async (req, res, next) => {
-
   const auth = req.headers["authentication"];
   const token = auth && auth.split(" ")[1];
 
   if (token == undefined) {
-    res.status(400).send();
+    res.status(400).send({ error: "No token provided" });
+    return;
   }
 
-  const result = jwt.verify(token, AUTH_PUBLIC_KEY, { algorithms: ["ES256"] });
+  const result = jwt.verify(token, AUTH_PUBLIC_KEY, { algorithms: ["RS256"] });
 
-  if (result.expiresAt > new Date().getTime()) {
-    res.status(400).send();
+  if (result.expiresAt < new Date().getTime()) {
+    res.status(400).send({ error: "Token expired" });
+    return;
   }
 
   req.email = result.email;
@@ -51,6 +52,18 @@ const checkAuth = async (req, res, next) => {
 };
 
 app.use(checkAuth);
+
+app.post("/download", async (req, res) => {
+  const fileID = req.body.fileID;
+
+  try {
+    const file = await File.findOne({ id: fileID });
+    res.status(200).send({ file: file.file, name: file.name });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({ error: "File not found" });
+  }
+});
 
 app.post("/upload", upload.single("file"), async (req, res) => {
   // need to check if user is authenticated
@@ -61,13 +74,17 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   const file = req.file;
 
   try {
-    await File.create({
+    const _file = await File.create({
       id: crypto.randomUUID(),
       name: file.originalname,
       file: file.buffer,
       allowedEmails: [req.body.allowed, req.email],
     });
-    res.status(200).send();
+    res.status(200).send({
+      id: _file.id,
+      name: _file.name,
+      allowedEmails: _file.allowedEmails,
+    });
   } catch (err) {
     console.log(err);
     res.status(400).send();

@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material";
-import CssBaseline from '@mui/material/CssBaseline';
-import App from './App';
+import CssBaseline from "@mui/material/CssBaseline";
+import App from "./App";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 /* Dark theme */
 const theme = createTheme({
@@ -31,5 +31,5 @@ root.render(
         <App />
       </ThemeProvider>
     </React.StrictMode>
-  </BrowserRouter>,
+  </BrowserRouter>
 );

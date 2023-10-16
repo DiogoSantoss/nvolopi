@@ -33,9 +33,9 @@ app.post("/create", async (req, res) => {
 
   try {
     const hash = await bcrypt.hash(password, 10);
-    const user = await User.create({email, password: hash});
+    const user = await User.create({ email, password: hash });
     res.status(200).send();
-  } catch(err) {
+  } catch (err) {
     res.status(400).send({ error: err });
   }
 });
@@ -51,12 +51,10 @@ app.post("/auth", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-
     const user = await User.findOne({ email: email });
     const valid = await bcrypt.compare(password, user.password);
 
     if (valid) {
-
       const expiresAt = new Date();
       expiresAt.setTime(expiresAt.getTime() + JWT_EXPIRATION);
       const token = jwt.sign(
@@ -71,7 +69,7 @@ app.post("/auth", async (req, res) => {
     } else {
       res.status(401).send({ error: "Invalid credentials" });
     }
-  } catch(err) {
+  } catch (err) {
     res.status(400).send({ error: err });
   }
 });
