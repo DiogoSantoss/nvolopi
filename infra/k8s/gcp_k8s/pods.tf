@@ -33,7 +33,7 @@ resource "kubernetes_deployment" "auth" {
       }
       spec {
         container {
-          image = "gcr.io/${var.project_id}/auth:${var.frontend_version}"
+          image = "gcr.io/${var.project_id}/service/auth:${var.auth_version}"
           name  = "container"
 
           port {
@@ -90,7 +90,7 @@ resource "kubernetes_deployment" "upload" {
       }
       spec {
         container {
-          image = "gcr.io/${var.project_id}/upload:${var.frontend_version}"
+          image = "gcr.io/${var.project_id}/service/upload:${var.upload_version}"
           name  = "container"
 
           port {
