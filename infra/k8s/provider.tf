@@ -1,20 +1,46 @@
 terraform {
   required_providers {
-    minikube = {
-      // nao tenho a certeza disto v
-      source = "kyma-incubator/minikube"
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "2.3.0"
+    }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = "1.13.0"
     }
   }
-
 }
-provider "minikube" {
-  kubernetes_version = "v1.26.3"
+data "google_client_config" "default" {
 }
 
 provider "kubernetes" {
-  host = minikube_cluster.docker.host
 
-  client_certificate     = minikube_cluster.docker.client_certificate
-  client_key             = minikube_cluster.docker.client_key
-  cluster_ca_certificate = minikube_cluster.docker.cluster_ca_certificate
+  host = "https://${var.host}"
+
+  token                  = data.google_client_config.default.access_token
+  client_certificate     = base64decode(var.client_certificate)
+  client_key             = base64decode(var.client_key)
+  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+}
+
+provider "helm" {
+  kubernetes {
+    host = "https://${var.host}"
+
+    token                  = data.google_client_config.default.access_token
+    client_certificate     = base64decode(var.client_certificate)
+    client_key             = base64decode(var.client_key)
+    cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+  }
+}
+
+provider "kubectl" {
+  host                   = "https://${var.host}"
+  load_config_file       = false
+
+  token                  = data.google_client_config.default.access_token
+  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
 }
