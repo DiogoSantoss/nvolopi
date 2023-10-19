@@ -24,6 +24,13 @@
             vscode-fhs
             minikube
             kubectl
+            graphviz
+            ansible
+            terraform
+            (google-cloud-sdk.withExtraComponents (with pkgs.google-cloud-sdk.components; [
+              gke-gcloud-auth-plugin
+            ]))
+            awscli2
           ];
         };
       }

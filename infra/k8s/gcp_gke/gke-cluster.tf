@@ -1,19 +1,8 @@
-variable "region" {
-    type = string
-}
-
-variable "project" {
-    type = string
-}
-
-variable "workers_count" {
-    type = number
-}
 
 resource "google_container_cluster" "nvolopi" {
   name     = "nvolopi"
-  project = var.project
-  location = var.region
+  project = var.project_id
+  location = var.gcp_region
   initial_node_count = var.workers_count
 
   addons_config {
@@ -23,7 +12,7 @@ resource "google_container_cluster" "nvolopi" {
   }
 
   node_config {
-    machine_type = "n1-standard-2"
+    machine_type = var.machine_type
     oauth_scopes = [
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/logging.write",
