@@ -2,32 +2,34 @@ import { Box, TextField, Button, Typography, Paper, Grid } from "@mui/material";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-
 import { isLoggedIn } from "../context/Auth";
+import CustomDialog from "../components/CustomDialog";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
 
   const [sending, setSending] = useState(false);
 
   const [error, setError] = useState("");
 
+  const [openDialog, setOpenDialog] = useState(false);
+
   if (isLoggedIn()) return <Navigate to="/upload" />;
 
   const handleLoginSubmit = async () => {
     setSending(true);
 
-    if (!email || !password) {
+    if (!user || !password) {
       setSending(false);
       return;
     }
 
     try {
       const response = await axios.post("http://localhost:3001/auth", {
-        email: email,
+        user: user,
         password: password,
       });
       const token = response.data;
@@ -44,19 +46,21 @@ const Login = () => {
   const handleCreateSubmit = async () => {
     setSending(true);
 
-    if (!email || !password) {
+    if (!user || !password) {
       setSending(false);
       return;
     }
 
     try {
       const response = await axios.post("http://localhost:3001/create", {
-        email: email,
+        user: user,
         password: password,
       });
       console.log(response);
+      setOpenDialog(true);
     } catch (err) {
       setError(err.message);
+      console.log(err);
     } finally {
       setSending(false);
     }
@@ -64,70 +68,78 @@ const Login = () => {
 
   /* Create a box in the middle with a login form using MUI Material */
   return (
-    <Paper sx={{ p: 5 }}>
-      <Box sx={{ mx: "auto", width: "50vh" }}>
-        <Typography variant="h4" component="h1">
-          <strong>Login</strong>
-        </Typography>
-        {error && (
-          <Typography fontSize={15} color="red">
-            There was an error with your login or account creation: {error}
+    <>
+      <CustomDialog 
+        open={openDialog}
+        setOpen={setOpenDialog}
+        title={"Account created!"}
+        content={"Now you can log in with it."}
+      />
+      <Paper sx={{ p: 5 }}>
+        <Box sx={{ mx: "auto", width: "50vh" }}>
+          <Typography variant="h4" component="h1">
+            <strong>Login</strong>
           </Typography>
-        )}
-        <Box component="form">
-          <TextField
-            margin="normal"
-            variant="filled"
-            required
-            fullWidth
-            id="email"
-            label={"Email"}
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            variant="filled"
-            required
-            fullWidth
-            name="password"
-            label={"Password"}
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Grid container spacing={2}>
-            <Grid item>
-              <Button
-                fullWidth
-                onClick={handleLoginSubmit}
-                variant="contained"
-                sx={{ mt: 3 }}
-                disabled={!email || !password}
-              >
-                {sending ? "Sending..." : "Login"}
-              </Button>
+          {error && (
+            <Typography fontSize={15} color="red">
+              There was an error with your login or account creation: {error}
+            </Typography>
+          )}
+          <Box component="form">
+            <TextField
+              margin="normal"
+              variant="filled"
+              required
+              fullWidth
+              id="user"
+              label={"User"}
+              name="user"
+              autoComplete="user"
+              autoFocus
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              variant="filled"
+              required
+              fullWidth
+              name="password"
+              label={"Password"}
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Grid container spacing={2}>
+              <Grid item>
+                <Button
+                  fullWidth
+                  onClick={handleLoginSubmit}
+                  variant="contained"
+                  sx={{ mt: 3 }}
+                  disabled={!user || !password}
+                >
+                  {sending ? "Sending..." : "Login"}
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  fullWidth
+                  onClick={handleCreateSubmit}
+                  variant="contained"
+                  sx={{ mt: 3 }}
+                  disabled={!user || !password}
+                >
+                  {sending ? "Sending..." : "Create"}
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button
-                fullWidth
-                onClick={handleCreateSubmit}
-                variant="contained"
-                sx={{ mt: 3 }}
-                disabled={!email || !password}
-              >
-                {sending ? "Sending..." : "Create"}
-              </Button>
-            </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
-    </Paper>
+      </Paper>
+    </>
   );
 };
 

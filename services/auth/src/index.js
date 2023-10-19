@@ -14,7 +14,7 @@ dotenv.config();
 const MONGO_URI = process.env.MONGO_URI;
 const PRIV_KEY = fs.readFileSync(process.env.AUTH_PRIV_KEY);
 const JWT_EXPIRATION = 30 * 60 * 1000;
-const port = process.env.PORT;
+const port = process.env.AUTH_PORT;
 
 db.connect(MONGO_URI);
 
@@ -25,17 +25,18 @@ app.use(bodyParser.json());
 /**
  * Create a new user in the database.
  * Parameters:
- * - email
+ * - user
  * - password
  */
 app.post("/create", async (req, res) => {
-  const { email, password } = req.body;
+  const { user, password } = req.body;
 
   try {
     const hash = await bcrypt.hash(password, 10);
-    const user = await User.create({ email, password: hash });
+    const user = await User.create({ user, password: hash });
     res.status(200).send();
   } catch (err) {
+    console.log(err);
     res.status(400).send({ error: err });
   }
 });
@@ -43,15 +44,15 @@ app.post("/create", async (req, res) => {
 /**
  * Login user and generate new JWT token.
  * Parameters:
- * - email
+ * - user
  * - password
  */
 app.post("/auth", async (req, res) => {
   // assume request is correct, might be problematic
-  const { email, password } = req.body;
+  const { user, password } = req.body;
 
   try {
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ user: user });
     const valid = await bcrypt.compare(password, user.password);
 
     if (valid) {
@@ -59,7 +60,7 @@ app.post("/auth", async (req, res) => {
       expiresAt.setTime(expiresAt.getTime() + JWT_EXPIRATION);
       const token = jwt.sign(
         {
-          email: user.email,
+          user: user.user,
           expiresAt: expiresAt.getTime(),
         },
         PRIV_KEY,
@@ -70,6 +71,7 @@ app.post("/auth", async (req, res) => {
       res.status(401).send({ error: "Invalid credentials" });
     }
   } catch (err) {
+    console.log(err);
     res.status(400).send({ error: err });
   }
 });

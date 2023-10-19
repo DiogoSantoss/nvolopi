@@ -6,7 +6,7 @@ COPY ./package.json .
 
 RUN npm install
 
-COPY ./src .
+COPY ./src ./.env ./pub.pem .
 
 EXPOSE 3002
 

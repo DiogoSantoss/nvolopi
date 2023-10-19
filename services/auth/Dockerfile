@@ -6,7 +6,7 @@ COPY ./package.json .
 
 RUN npm install
 
-COPY ./src .
+COPY ./src ./.env ./priv.pem .
 
 EXPOSE 3001
 

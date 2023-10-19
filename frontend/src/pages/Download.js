@@ -53,7 +53,6 @@ const Download = () => {
             <TextField
               onChange={handleFileIDChange}
               fullWidth
-              autoComplete="email"
               autoFocus
               label="Enter file ID..."
             />

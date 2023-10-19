@@ -14,7 +14,7 @@ dotenv.config();
 const MONGO_URI = process.env.MONGO_URI;
 const SIZE_LIMIT = 5 << 20;
 const AUTH_PUBLIC_KEY = fs.readFileSync(process.env.AUTH_PUBLIC_KEY);
-const PORT = process.env.PORT;
+const UPLOAD_PORT = process.env.PORT;
 
 const app = express();
 app.use(cors()); // for local development
@@ -46,7 +46,9 @@ const checkAuth = async (req, res, next) => {
     return;
   }
 
-  req.email = result.email;
+  // TODO: Maybe check if user exists in DB and if token is valid
+
+  req.user = result.user;
 
   next();
 };
@@ -72,18 +74,21 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   // store metadata about file in DB
 
   const file = req.file;
+  let allowed = [req.user];
 
+  if (req.body.allowed) {
+    allowed += [req.body.allowed];
+  }
+  
   try {
     const _file = await File.create({
       id: crypto.randomUUID(),
       name: file.originalname,
       file: file.buffer,
-      allowedEmails: [req.body.allowed, req.email],
+      allowedUsers: [req.body.allowed, req.user],
     });
     res.status(200).send({
-      id: _file.id,
-      name: _file.name,
-      allowedEmails: _file.allowedEmails,
+      fileID: _file.id
     });
   } catch (err) {
     console.log(err);
