@@ -9,6 +9,7 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "upload" {
     max_replicas = 3
 
     scale_target_ref {
+      api_version = "apps/v1"
       kind = "Deployment"
       name = "upload"
     }
@@ -37,6 +38,7 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "auth" {
     max_replicas = 3
 
     scale_target_ref {
+      api_version = "apps/v1"
       kind = "Deployment"
       name = "auth"
     }
@@ -65,6 +67,7 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "frontend" {
     max_replicas = 3
 
     scale_target_ref {
+      api_version = "apps/v1"
       kind = "Deployment"
       name = "frontend"
     }
