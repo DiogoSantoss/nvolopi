@@ -2,8 +2,8 @@ import requests
 import multiprocessing
 from os.path import join
 
-URL = "http://35.205.26.159"
-COUNT = 15
+URL = "http://34.38.121.174"
+COUNT = 500
 PATH = "./dummy-files/4mb"
 
 """

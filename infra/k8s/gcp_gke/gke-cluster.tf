@@ -4,7 +4,20 @@ resource "google_container_cluster" "nvolopi" {
   location = var.gcp_region
   initial_node_count = var.workers_count
   deletion_protection = false
-  
+
+  cluster_autoscaling {
+    enabled = true
+    resource_limits {
+      resource_type = "cpu"
+      minimum = 10
+      maximum = 16
+    }
+    resource_limits {
+      resource_type = "memory"
+      minimum = 24
+      maximum = 64
+    }
+  }
   
   addons_config {
     network_policy_config {
