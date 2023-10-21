@@ -14,7 +14,7 @@ dotenv.config();
 const MONGO_URI = process.env.MONGO_URI;
 const PRIV_KEY = fs.readFileSync(process.env.AUTH_PRIV_KEY);
 const JWT_EXPIRATION = 30 * 60 * 1000;
-const port = process.env.AUTH_PORT;
+const PORT = process.env.AUTH_PORT_NUMBER;
 
 db.connect(MONGO_URI);
 
@@ -33,7 +33,7 @@ app.post("/create", async (req, res) => {
 
   try {
     const hash = await bcrypt.hash(password, 10);
-    const user = await User.create({ user, password: hash });
+    await User.create({ user, password: hash });
     res.status(200).send();
   } catch (err) {
     console.log(err);
@@ -83,6 +83,6 @@ app.post("/refresh", (req, res) => {
   res.send({ token: "token" });
 });
 
-app.listen(port, () => {
-  console.log(`Auth service listening on port ${port}...`);
+app.listen(PORT, () => {
+  console.log(`Auth service listening on port ${PORT}...`);
 });

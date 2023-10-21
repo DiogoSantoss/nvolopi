@@ -14,7 +14,7 @@ dotenv.config();
 const MONGO_URI = process.env.MONGO_URI;
 const SIZE_LIMIT = 5 << 20;
 const AUTH_PUBLIC_KEY = fs.readFileSync(process.env.AUTH_PUBLIC_KEY);
-const UPLOAD_PORT = process.env.PORT;
+const PORT = process.env.UPLOAD_PORT_NUMBER;
 
 const app = express();
 app.use(cors()); // for local development

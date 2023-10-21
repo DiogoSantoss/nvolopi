@@ -1,4 +1,3 @@
-
 resource "google_container_cluster" "nvolopi" {
   name     = "nvolopi"
   project = var.project_id

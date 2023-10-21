@@ -1,9 +1,3 @@
-#################################################################
-# Definition of the Pods
-#################################################################
-
-#################################################################
-
 resource "kubernetes_deployment" "auth" {
   metadata {
     name = "auth"
@@ -16,7 +10,7 @@ resource "kubernetes_deployment" "auth" {
   }
 
   spec {
-    replicas = 3
+    replicas = 1
     selector {
       match_labels = {
         app  = "nvolopi"
@@ -73,7 +67,7 @@ resource "kubernetes_deployment" "upload" {
   }
 
   spec {
-    replicas = 3
+    replicas = 1
     selector {
       match_labels = {
         app  = "nvolopi"
@@ -187,7 +181,7 @@ resource "kubernetes_deployment" "frontend" {
   }
 
   spec {
-    replicas = 3
+    replicas = 1
     selector {
       match_labels = {
         app  = "nvolopi"

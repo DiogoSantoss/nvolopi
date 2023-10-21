@@ -34,7 +34,7 @@ const Upload = () => {
         formData.append("allowed", allowed);
       formData.append("file", file);
 
-      const response = await axios.post("http://localhost:3002/upload", formData, {
+      const response = await axios.post("/api/upload/upload", formData, {
         headers: {
           Authentication: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "multipart/form-data",

@@ -381,5 +381,6 @@ operations/variable-scripts/variable.json
 # Sensitive info
 *.tfvars
 infra/*.json
-
+plan.out
+studied-reason-400621-7f66018600a2.json
 .terraform.lock.hcl

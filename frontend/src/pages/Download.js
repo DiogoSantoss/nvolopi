@@ -22,7 +22,7 @@ const Download = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:3002/download",
+        "/api/upload/download",
         {
           fileID: fileID,
         },

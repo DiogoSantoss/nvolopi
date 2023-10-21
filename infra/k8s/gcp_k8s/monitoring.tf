@@ -1,4 +1,3 @@
-# Prometheus deployment
 data "kubectl_file_documents" "prometheus_docs" {
   content = file("${path.module}/monitoring/prometheus.yaml")
 }
@@ -12,7 +11,6 @@ resource "kubectl_manifest" "prometheus" {
   ]
 }
 
-# Grafana deployment
 data "kubectl_file_documents" "grafana_docs" {
   content = file("${path.module}/monitoring/grafana.yaml")
 }

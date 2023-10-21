@@ -1,7 +1,3 @@
-#################################################################
-# Definition of the Services
-#################################################################
-
 resource "kubernetes_service" "auth" {
   metadata {
     name = "auth"
@@ -77,8 +73,6 @@ resource "kubernetes_service" "db" {
   }
 }
 
-#################################################################
-# The Service for the Frontend Load Balancer Ingress
 resource "kubernetes_service" "frontend" {
   metadata {
     name = "frontend"

@@ -4,16 +4,15 @@ variable "project_id" {
 
 variable "machine_type" {
   type = string
-  # Should be enough
-  default = "e2-medium"
+  default = "n1-standard-2"
 }
 
 variable "gcp_region" {
   type = string
-  default = "europe-southwest1"
+  default = "europe-west1-c"
 }
 
 variable "workers_count" {
   type = number
-  default = 1  
+  default = 5  
 }

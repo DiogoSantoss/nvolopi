@@ -28,7 +28,7 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3001/auth", {
+      const response = await axios.post("api/auth/auth", {
         user: user,
         password: password,
       });
@@ -52,7 +52,7 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3001/create", {
+      const response = await axios.post("/api/auth/create", {
         user: user,
         password: password,
       });
