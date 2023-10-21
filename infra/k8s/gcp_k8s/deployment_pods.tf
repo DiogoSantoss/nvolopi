@@ -160,6 +160,19 @@ resource "kubernetes_deployment" "db" {
               memory = "100Mi"
             }
           }
+
+          volume_mount {
+            name       = "db-fs"
+            mount_path = "/data/db"
+          }
+        }
+
+        volume {
+          name = "db-fs"
+
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.db-fs.metadata[0].name
+          }
         }
       }
     }

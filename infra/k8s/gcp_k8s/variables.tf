@@ -20,3 +20,7 @@ variable "project_id" {
 variable "host" {
   type = string
 }
+
+variable "gcp_region" {
+  type = string
+}

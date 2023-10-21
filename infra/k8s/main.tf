@@ -2,6 +2,11 @@ variable "credentials_file" {
   type = string
 }
 
+variable "gcp_region" {
+  type = string
+  default = "europe-west1-c"
+}
+
 locals {
   credentials_file = file(var.credentials_file)
   credentials      = jsondecode(local.credentials_file)
@@ -14,6 +19,7 @@ data "google_client_config" "default" {
 module "gcp_gke" {
   source   = "./gcp_gke"
   project_id = local.credentials.project_id
+  gcp_region = var.gcp_region
 }
 
 module "gcp_k8s" {
@@ -24,4 +30,5 @@ module "gcp_k8s" {
   client_key             = module.gcp_gke.client_key
   cluster_ca_certificate = module.gcp_gke.cluster_ca_certificate
   project_id = local.credentials.project_id
+  gcp_region = var.gcp_region
 }

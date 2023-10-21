@@ -9,7 +9,6 @@ variable "machine_type" {
 
 variable "gcp_region" {
   type = string
-  default = "europe-west1-c"
 }
 
 variable "workers_count" {
