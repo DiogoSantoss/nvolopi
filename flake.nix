@@ -31,6 +31,9 @@
               gke-gcloud-auth-plugin
             ]))
             awscli2
+            (python3.withPackages (ps: with ps; [
+              requests
+            ]))
           ];
         };
       }
