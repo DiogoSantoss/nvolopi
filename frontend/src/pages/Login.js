@@ -56,7 +56,6 @@ const Login = () => {
         username: username,
         password: password,
       });
-      console.log(response);
       setOpenDialog(true);
     } catch (err) {
       setError(err.message);

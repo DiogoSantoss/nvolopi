@@ -5,6 +5,7 @@ resource "google_container_cluster" "nvolopi" {
   initial_node_count = var.workers_count
   deletion_protection = false
   
+  
   addons_config {
     network_policy_config {
       disabled = true
