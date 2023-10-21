@@ -40,7 +40,7 @@ const Upload = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-
+      setOpenDialog(true);
       setFileID(response.data.fileID);
     } catch (err) {
       setError(err.message);
@@ -83,7 +83,7 @@ const Upload = () => {
                 fullWidth
                 autoComplete="user"
                 autoFocus
-                label="Share this with (user)..."
+                label="Share this with (users, separated by commas)..."
               ></TextField>
             </Grid>
             <Grid item xs={8}>

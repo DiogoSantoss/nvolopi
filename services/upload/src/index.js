@@ -77,7 +77,9 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   let allowed = [req.user];
 
   if (req.body.allowed) {
-    allowed += [req.body.allowed];
+    allowed += req.body.allowed.split(",").forEach(element => {
+      element.trim();
+    });
   }
   
   try {

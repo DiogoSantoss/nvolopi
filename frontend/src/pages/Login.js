@@ -8,7 +8,7 @@ import CustomDialog from "../components/CustomDialog";
 const Login = () => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [sending, setSending] = useState(false);
@@ -22,14 +22,14 @@ const Login = () => {
   const handleLoginSubmit = async () => {
     setSending(true);
 
-    if (!user || !password) {
+    if (!username || !password) {
       setSending(false);
       return;
     }
 
     try {
       const response = await axios.post("api/auth/auth", {
-        user: user,
+        username: username,
         password: password,
       });
       const token = response.data;
@@ -46,14 +46,14 @@ const Login = () => {
   const handleCreateSubmit = async () => {
     setSending(true);
 
-    if (!user || !password) {
+    if (!username || !password) {
       setSending(false);
       return;
     }
 
     try {
       const response = await axios.post("/api/auth/create", {
-        user: user,
+        username: username,
         password: password,
       });
       console.log(response);
@@ -91,13 +91,13 @@ const Login = () => {
               variant="filled"
               required
               fullWidth
-              id="user"
-              label={"User"}
-              name="user"
-              autoComplete="user"
+              id="username"
+              label={"Username"}
+              name="username"
+              autoComplete="username"
               autoFocus
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -119,7 +119,7 @@ const Login = () => {
                   onClick={handleLoginSubmit}
                   variant="contained"
                   sx={{ mt: 3 }}
-                  disabled={!user || !password}
+                  disabled={!username || !password}
                 >
                   {sending ? "Sending..." : "Login"}
                 </Button>
@@ -130,7 +130,7 @@ const Login = () => {
                   onClick={handleCreateSubmit}
                   variant="contained"
                   sx={{ mt: 3 }}
-                  disabled={!user || !password}
+                  disabled={!username || !password}
                 >
                   {sending ? "Sending..." : "Create"}
                 </Button>

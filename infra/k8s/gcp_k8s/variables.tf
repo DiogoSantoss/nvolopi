@@ -20,18 +20,3 @@ variable "project_id" {
 variable "host" {
   type = string
 }
-
-variable "frontend_version" {
-  type = string
-  default = "0.1"
-}
-
-variable "upload_version" {
-  type = string
-  default = "0.1"
-}
-
-variable "auth_version" {
-  type = string
-  default = "0.1"
-}

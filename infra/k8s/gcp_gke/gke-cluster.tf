@@ -3,7 +3,8 @@ resource "google_container_cluster" "nvolopi" {
   project = var.project_id
   location = var.gcp_region
   initial_node_count = var.workers_count
-
+  deletion_protection = false
+  
   addons_config {
     network_policy_config {
       disabled = true

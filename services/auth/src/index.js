@@ -29,11 +29,11 @@ app.use(bodyParser.json());
  * - password
  */
 app.post("/create", async (req, res) => {
-  const { user, password } = req.body;
+  const { username, password } = req.body;
 
   try {
     const hash = await bcrypt.hash(password, 10);
-    await User.create({ user, password: hash });
+    await User.create({ user: username, password: hash });
     res.status(200).send();
   } catch (err) {
     console.log(err);
@@ -49,10 +49,10 @@ app.post("/create", async (req, res) => {
  */
 app.post("/auth", async (req, res) => {
   // assume request is correct, might be problematic
-  const { user, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ user: user });
+    const user = await User.findOne({ user: username });
     const valid = await bcrypt.compare(password, user.password);
 
     if (valid) {

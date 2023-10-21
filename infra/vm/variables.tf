@@ -26,15 +26,15 @@ variable "machine_type" {
 
 variable "frontend_version" {
   type = string
-  default = "0.1"
+  default = "latest"
 }
 
 variable "upload_version" {
   type = string
-  default = "0.1"
+  default = "latest"
 }
 
 variable "auth_version" {
   type = string
-  default = "0.1"
+  default = "latest"
 }
