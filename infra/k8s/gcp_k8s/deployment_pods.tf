@@ -162,16 +162,15 @@ resource "kubernetes_deployment" "db" {
           }
 
           volume_mount {
-            name       = "db-fs"
+            name       = "persistent-fs"
             mount_path = "/data/db"
           }
         }
 
         volume {
-          name = "db-fs"
-
-          persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim_v1.db-fs.metadata[0].name
+          name = "persistent-fs"
+          gce_persistent_disk {
+            pd_name = "persistentfs"
           }
         }
       }

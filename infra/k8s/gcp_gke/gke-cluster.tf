@@ -27,6 +27,7 @@ resource "google_container_cluster" "nvolopi" {
 
   node_config {
     machine_type = var.machine_type
+    disk_size_gb = 10
     oauth_scopes = [
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/logging.write",
@@ -37,6 +38,15 @@ resource "google_container_cluster" "nvolopi" {
       "https://www.googleapis.com/auth/compute",
     ]
   }
+}
+
+resource "google_compute_disk" "persistentfs" {
+  name  = "persistentfs"
+  type  = "pd-ssd"
+  zone = var.gcp_region
+  project = var.project_id
+  size = 20
+  physical_block_size_bytes = 4096
 }
 
 output "client_certificate" {
