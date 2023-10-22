@@ -4,7 +4,7 @@ variable "credentials_file" {
 
 variable "gcp_region" {
   type    = string
-  default = "europe-west1-c"
+  default = "europe-west1-b"
 }
 
 locals {
