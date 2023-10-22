@@ -3,7 +3,7 @@ variable "project_id" {
 }
 
 variable "machine_type" {
-  type = string
+  type    = string
   default = "n1-standard-2"
 }
 
@@ -12,6 +12,6 @@ variable "gcp_region" {
 }
 
 variable "workers_count" {
-  type = number
-  default = 5  
+  type    = number
+  default = 5
 }

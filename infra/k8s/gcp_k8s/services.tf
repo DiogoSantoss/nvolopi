@@ -6,7 +6,7 @@ resource "kubernetes_service" "auth" {
       app  = "nvolopi"
       tier = "auth"
     }
-    namespace = kubernetes_namespace.nvolopi.id    
+    namespace = kubernetes_namespace.nvolopi.id
   }
 
   spec {
@@ -31,7 +31,7 @@ resource "kubernetes_service" "upload" {
       app  = "nvolopi"
       tier = "upload"
     }
-    namespace = kubernetes_namespace.nvolopi.id    
+    namespace = kubernetes_namespace.nvolopi.id
   }
 
   spec {
@@ -56,7 +56,7 @@ resource "kubernetes_service" "db" {
       app  = "nvolopi"
       tier = "db"
     }
-    namespace = kubernetes_namespace.nvolopi.id    
+    namespace = kubernetes_namespace.nvolopi.id
   }
 
   spec {
@@ -81,7 +81,7 @@ resource "kubernetes_service" "frontend" {
       app  = "nvolopi"
       tier = "frontend"
     }
-    namespace = kubernetes_namespace.nvolopi.id    
+    namespace = kubernetes_namespace.nvolopi.id
   }
 
   spec {

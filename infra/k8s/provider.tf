@@ -1,3 +1,3 @@
 provider "google" {
-    credentials = local.credentials_file
+  credentials = local.credentials_file
 }

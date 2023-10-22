@@ -1,24 +1,24 @@
 resource "google_container_cluster" "nvolopi" {
-  name     = "nvolopi"
-  project = var.project_id
-  location = var.gcp_region
-  initial_node_count = var.workers_count
+  name                = "nvolopi"
+  project             = var.project_id
+  location            = var.gcp_region
+  initial_node_count  = var.workers_count
   deletion_protection = false
 
   cluster_autoscaling {
     enabled = true
     resource_limits {
       resource_type = "cpu"
-      minimum = 10
-      maximum = 16
+      minimum       = 10
+      maximum       = 16
     }
     resource_limits {
       resource_type = "memory"
-      minimum = 24
-      maximum = 64
+      minimum       = 24
+      maximum       = 64
     }
   }
-  
+
   addons_config {
     network_policy_config {
       disabled = true
@@ -41,11 +41,11 @@ resource "google_container_cluster" "nvolopi" {
 }
 
 resource "google_compute_disk" "persistentfs" {
-  name  = "persistentfs"
-  type  = "pd-ssd"
-  zone = var.gcp_region
-  project = var.project_id
-  size = 20
+  name                      = "persistentfs"
+  type                      = "pd-ssd"
+  zone                      = var.gcp_region
+  project                   = var.project_id
+  size                      = 20
   physical_block_size_bytes = 4096
 }
 

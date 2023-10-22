@@ -27,8 +27,8 @@ resource "kubernetes_deployment" "auth" {
       }
       spec {
         container {
-          image = "gcr.io/${var.project_id}/service/auth:latest"
-          name  = "container"
+          image             = "gcr.io/${var.project_id}/service/auth:latest"
+          name              = "container"
           image_pull_policy = "Always"
 
           port {

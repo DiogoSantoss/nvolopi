@@ -1,9 +1,9 @@
 resource "helm_release" "istio_base" {
-  name  = "istio-base"
+  name       = "istio-base"
   repository = "https://istio-release.storage.googleapis.com/charts"
-  chart = "base"
+  chart      = "base"
 
-  timeout = 120
+  timeout         = 120
   cleanup_on_fail = true
   force_update    = true
   namespace       = "istio-system"
@@ -13,11 +13,11 @@ resource "helm_release" "istio_base" {
 }
 
 resource "helm_release" "istiod" {
-  name  = "istiod"
+  name       = "istiod"
   repository = "https://istio-release.storage.googleapis.com/charts"
-  chart = "istiod"
+  chart      = "istiod"
 
-  timeout = 120
+  timeout         = 120
   cleanup_on_fail = true
   force_update    = true
   namespace       = "istio-system"

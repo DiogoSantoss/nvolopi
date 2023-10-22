@@ -1,5 +1,5 @@
 variable "cluster" {
-} 
+}
 
 variable "client_certificate" {
   type = string

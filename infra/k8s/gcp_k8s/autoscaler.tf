@@ -1,6 +1,6 @@
 resource "kubernetes_horizontal_pod_autoscaler_v2" "upload" {
   metadata {
-    name = "upload-autoscaler"
+    name      = "upload-autoscaler"
     namespace = "nvolopi"
   }
 
@@ -10,8 +10,8 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "upload" {
 
     scale_target_ref {
       api_version = "apps/v1"
-      kind = "Deployment"
-      name = "upload"
+      kind        = "Deployment"
+      name        = "upload"
     }
 
     metric {
@@ -19,8 +19,8 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "upload" {
       resource {
         name = "cpu"
         target {
-            type = "Utilization"
-            average_utilization = 50
+          type                = "Utilization"
+          average_utilization = 50
         }
       }
     }
@@ -29,7 +29,7 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "upload" {
 
 resource "kubernetes_horizontal_pod_autoscaler_v2" "auth" {
   metadata {
-    name = "auth-autoscaler"
+    name      = "auth-autoscaler"
     namespace = "nvolopi"
   }
 
@@ -39,8 +39,8 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "auth" {
 
     scale_target_ref {
       api_version = "apps/v1"
-      kind = "Deployment"
-      name = "auth"
+      kind        = "Deployment"
+      name        = "auth"
     }
 
     metric {
@@ -48,8 +48,8 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "auth" {
       resource {
         name = "cpu"
         target {
-            type = "Utilization"
-            average_utilization = 50
+          type                = "Utilization"
+          average_utilization = 50
         }
       }
     }
@@ -58,7 +58,7 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "auth" {
 
 resource "kubernetes_horizontal_pod_autoscaler_v2" "frontend" {
   metadata {
-    name = "frontend-autoscaler"
+    name      = "frontend-autoscaler"
     namespace = "nvolopi"
   }
 
@@ -68,8 +68,8 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "frontend" {
 
     scale_target_ref {
       api_version = "apps/v1"
-      kind = "Deployment"
-      name = "frontend"
+      kind        = "Deployment"
+      name        = "frontend"
     }
 
     metric {
@@ -77,8 +77,8 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "frontend" {
       resource {
         name = "cpu"
         target {
-            type = "Utilization"
-            average_utilization = 50
+          type                = "Utilization"
+          average_utilization = 50
         }
       }
     }

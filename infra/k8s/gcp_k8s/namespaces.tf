@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "istio_system" {
 resource "kubernetes_namespace" "nvolopi" {
   metadata {
     name = "nvolopi"
-   
+
     labels = {
       istio-injection = "enabled"
     }
