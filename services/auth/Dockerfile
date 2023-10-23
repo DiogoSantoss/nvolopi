@@ -6,8 +6,8 @@ COPY ./package.json .
 
 RUN npm install
 
-COPY ./src ./priv.pem .
-
+COPY ./src .
+COPY ./priv.pem .
 COPY ./.env.example ./.env
 
 EXPOSE 3001
