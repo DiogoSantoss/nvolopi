@@ -6,7 +6,7 @@ resource "google_container_cluster" "nvolopi" {
   deletion_protection = false
 
   # Remove default node pool and use our own with autoscaling
-  #remove_default_node_pool = true
+  remove_default_node_pool = true
   #initial_node_count = 1
 
   addons_config {

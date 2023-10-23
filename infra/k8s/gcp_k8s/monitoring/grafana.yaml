@@ -54,6 +54,13 @@ data:
     apiVersion: 1
     providers:
     - disableDeletion: false
+      folder: nvolopi
+      name: nvolopi
+      options:
+        path: /var/lib/grafana/dashboards/nvolopi
+      orgId: 1
+      type: file
+    - disableDeletion: false
       folder: istio
       name: istio
       options:
@@ -143,6 +150,8 @@ spec:
               subPath: grafana.ini
             - name: storage
               mountPath: "/var/lib/grafana"
+            - name: dashboards-nvolopi
+              mountPath: "/var/lib/grafana/dashboards/nvolopi"
             - name: dashboards-istio
               mountPath: "/var/lib/grafana/dashboards/istio"
             - name: dashboards-istio-services
@@ -161,7 +170,6 @@ spec:
               containerPort: 3000
               protocol: TCP
           env:
-            
             - name: GF_PATHS_DATA
               value: /var/lib/grafana/
             - name: GF_PATHS_LOGS
@@ -197,7 +205,6 @@ spec:
         - name: config
           configMap:
             name: grafana
-        
         - name: dashboards-nvolopi
           configMap:
             name: nvolopi-grafana-dashboards
@@ -217,7 +224,7 @@ data:
   nvolopi-grafana-dashboard.json: |
     {"annotations":{"list":[{"builtIn":1,"datasource":"-- Grafana --","enable":true,"hide":true,"iconColor":"rgba(0, 211, 255, 1)","name":"Annotations & Alerts","target":{"limit":100,"matchAny":false,"tags":[],"type":"dashboard"},"type":"dashboard"}]},"editable":true,"gnetId":null,"graphTooltip":0,"id":8,"links":[],"panels":[{"datasource":null,"fieldConfig":{"defaults":{"color":{"mode":"palette-classic"},"custom":{"axisLabel":"","axisPlacement":"auto","barAlignment":0,"drawStyle":"line","fillOpacity":0,"gradientMode":"none","hideFrom":{"legend":false,"tooltip":false,"viz":false},"lineInterpolation":"linear","lineWidth":1,"pointSize":5,"scaleDistribution":{"type":"linear"},"showPoints":"auto","spanNulls":false,"stacking":{"group":"A","mode":"none"},"thresholdsStyle":{"mode":"off"}},"mappings":[],"thresholds":{"mode":"absolute","steps":[{"color":"green","value":null},{"color":"red","value":80}]}},"overrides":[]},"gridPos":{"h":8,"w":12,"x":0,"y":0},"id":6,"options":{"legend":{"calcs":[],"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"single"}},"targets":[{"exemplar":true,"expr":"sum(istio_tcp_received_bytes_total) by (source_workload,destination_service_name)","interval":"","legendFormat":"","refId":"A"}],"title":"TCP Received Bytes by Source and Destination","type":"timeseries"},{"datasource":null,"fieldConfig":{"defaults":{"color":{"mode":"palette-classic"},"custom":{"axisLabel":"","axisPlacement":"auto","barAlignment":0,"drawStyle":"line","fillOpacity":0,"gradientMode":"none","hideFrom":{"legend":false,"tooltip":false,"viz":false},"lineInterpolation":"linear","lineWidth":1,"pointSize":6,"scaleDistribution":{"type":"linear"},"showPoints":"auto","spanNulls":false,"stacking":{"group":"A","mode":"none"},"thresholdsStyle":{"mode":"off"}},"mappings":[],"thresholds":{"mode":"absolute","steps":[{"color":"green","value":null},{"color":"red","value":300}]},"unit":"decbytes"},"overrides":[]},"gridPos":{"h":17,"w":12,"x":12,"y":0},"id":2,"options":{"legend":{"calcs":[],"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"single"}},"pluginVersion":"8.1.2","targets":[{"exemplar":true,"expr":"sum(container_memory_usage_bytes {namespace=\"nvolopi\"}) by (pod)","instant":false,"interval":"","legendFormat":"","refId":"A"}],"title":"Memory Usage By Pod","type":"timeseries"},{"datasource":null,"fieldConfig":{"defaults":{"color":{"mode":"palette-classic"},"custom":{"axisLabel":"","axisPlacement":"auto","barAlignment":0,"drawStyle":"line","fillOpacity":0,"gradientMode":"none","hideFrom":{"legend":false,"tooltip":false,"viz":false},"lineInterpolation":"linear","lineWidth":1,"pointSize":5,"scaleDistribution":{"type":"linear"},"showPoints":"auto","spanNulls":false,"stacking":{"group":"A","mode":"none"},"thresholdsStyle":{"mode":"off"}},"mappings":[],"thresholds":{"mode":"absolute","steps":[{"color":"green","value":null},{"color":"red","value":80}]},"unit":"none"},"overrides":[]},"gridPos":{"h":9,"w":12,"x":0,"y":8},"id":4,"options":{"legend":{"calcs":[],"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"single"}},"targets":[{"exemplar":true,"expr":"sum(container_cpu_load_average_10s {namespace=\"nvolopi\"}) by (pod)","interval":"","legendFormat":"","refId":"A"}],"title":"CPU Usage by Pod","type":"timeseries"}],"refresh":false,"schemaVersion":30,"style":"dark","tags":[],"templating":{"list":[]},"time":{"from":"now-1h","to":"now"},"timepicker":{},"timezone":"","title":"Nvolopi Dashboard","uid":"hauCv17Ik","version":6}
 kind: ConfigMap
-metada:
+metadata:
   creationTimestamp: null
   name: nvolopi-grafana-dashboards
   namespace: istio-system

@@ -1,7 +1,7 @@
 resource "kubernetes_horizontal_pod_autoscaler_v2" "upload" {
   metadata {
     name      = "upload-autoscaler"
-    namespace = "nvolopi"
+    namespace = kubernetes_namespace.nvolopi.id
   }
 
   spec {
@@ -30,7 +30,7 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "upload" {
 resource "kubernetes_horizontal_pod_autoscaler_v2" "auth" {
   metadata {
     name      = "auth-autoscaler"
-    namespace = "nvolopi"
+    namespace = kubernetes_namespace.nvolopi.id
   }
 
   spec {
@@ -59,7 +59,7 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "auth" {
 resource "kubernetes_horizontal_pod_autoscaler_v2" "frontend" {
   metadata {
     name      = "frontend-autoscaler"
-    namespace = "nvolopi"
+    namespace = kubernetes_namespace.nvolopi.id
   }
 
   spec {
