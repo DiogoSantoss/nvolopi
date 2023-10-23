@@ -68,7 +68,7 @@ const Upload = () => {
             width: "50vh",
           }}
         >
-          <Typography variant="h4" component="h1">
+          <Typography variant="h4" component="h1" sx={{mb:2}}>
             <strong>Upload</strong>
           </Typography>
           {error && (
