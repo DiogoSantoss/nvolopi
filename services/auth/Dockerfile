@@ -12,4 +12,4 @@ COPY ./.env.example ./.env
 
 EXPOSE 3001
 
-ENTRYPOINT ["npm","run","start"]
+ENTRYPOINT ["npm","run","start-prod"]
