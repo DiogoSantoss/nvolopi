@@ -21,7 +21,6 @@
             nodePackages.eslint
             mongosh
             openssl
-            vscode-fhs
             minikube
             kubectl
             graphviz
