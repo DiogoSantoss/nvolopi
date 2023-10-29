@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
     end
     config.trigger.before :destroy do |trigger|
       trigger.warn = "Running terraform destroy"
-      trigger.run_remote = {inline: "terraform destroy -auto-approve"}
+      trigger.run_remote = {inline: "terraform destroy"}
     end
   end
   

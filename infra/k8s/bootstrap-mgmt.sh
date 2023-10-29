@@ -18,16 +18,9 @@ sudo apt-get install -y gnupg
 # required for SDKs
 sudo apt-get -y install python3-dev 
 sudo apt-get -y install python3-pip
-# Add snap installer
-sudo apt-get -y install snapd
 
 # Add graph builder tool for Terraform
 sudo apt-get -y install graphviz
-
-# install Ansible (http://docs.ansible.com/intro_installation.html)
-sudo apt-add-repository -y -u ppa:ansible/ansible
-sudo apt-get update
-sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install ansible
 
 # Install Terraform
 sudo apt-get update
@@ -43,10 +36,6 @@ unzip -qq "$FILENAME"
 sudo mv terraform /usr/local/bin
 rm "$FILENAME"
 
-
-# install OpenStack SDK modules
-pip install python-openstackclient
-
 # Install Google Cloud SDK
 # snap install google-cloud-sdk --classic
 sudo apt-get -y install apt-transport-https
@@ -58,13 +47,5 @@ sudo apt-get -y install google-cloud-sdk
 # Install Kubernetes Controller
 sudo apt-get -y install kubectl google-cloud-sdk-gke-gcloud-auth-plugin
 
-# Install Amazon AWS-CLI
-PROCAWS=$(lscpu 2> /dev/null | awk '/Architecture/ {if($2 == "x86_64") {print "x86_64"; exit} else if($2 ~ /arm/) {print "arm"; exit} else if($2 ~ /aarch64/) {print "aarch64"; exit} else {print "386"; exit}}')
-curl "https://awscli.amazonaws.com/awscli-exe-linux-${PROCAWS}.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-
 # Clean up cached packages
 sudo apt-get clean all
-sudo rm ./awscliv2.zip
-
