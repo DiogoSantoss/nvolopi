@@ -22,7 +22,3 @@ output "cluster" {
   value     = google_container_cluster.nvolopi
   sensitive = true
 }
-
-output "load_balancer" {
-  value = google_compute_global_address.load_balancer.address
-}
