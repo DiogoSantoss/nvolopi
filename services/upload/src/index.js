@@ -60,10 +60,14 @@ app.post("/download", async (req, res) => {
 
   try {
     const file = await File.findOne({ id: fileID });
+    if (!file.allowedUsers.includes(req.user)) {
+      res.status(403).send({ error: "You are not allowed to download this file" });
+      return;
+    }
     res.status(200).send({ file: file.file, name: file.name });
   } catch (err) {
     console.log(err);
-    res.status(400).send({ error: "File not found" });
+    res.status(404).send({ error: "File not found" });
   }
 });
 

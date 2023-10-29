@@ -21,6 +21,10 @@ resource "kubernetes_service" "auth" {
       port = 3001
     }
   }
+
+  depends_on = [
+    kubernetes_deployment.db
+  ]
 }
 
 resource "kubernetes_service" "upload" {
@@ -46,6 +50,10 @@ resource "kubernetes_service" "upload" {
       port = 3002
     }
   }
+
+  depends_on = [
+    kubernetes_deployment.db
+  ]
 }
 
 resource "kubernetes_service" "db" {
@@ -71,6 +79,10 @@ resource "kubernetes_service" "db" {
       port = 27017
     }
   }
+
+  depends_on = [
+    kubernetes_deployment.db
+  ]
 }
 
 resource "kubernetes_service" "frontend" {
@@ -96,4 +108,9 @@ resource "kubernetes_service" "frontend" {
       port = 80
     }
   }
+
+  depends_on = [
+    kubernetes_deployment.auth,
+    kubernetes_deployment.upload
+  ]
 }
