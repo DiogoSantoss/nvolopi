@@ -16,8 +16,6 @@ const PRIV_KEY = fs.readFileSync(process.env.AUTH_PRIV_KEY);
 const JWT_EXPIRATION = 30 * 60 * 1000;
 const PORT = process.env.AUTH_PORT_NUMBER;
 
-db.connect(MONGO_URI);
-
 const app = express();
 app.use(cors()); // for local development
 app.use(bodyParser.json());
@@ -83,6 +81,9 @@ app.post("/refresh", (req, res) => {
   res.send({ token: "token" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Auth service listening on port ${PORT}...`);
-});
+db.connect(MONGO_URI).then(() => 
+  app.listen(PORT, () => {
+    console.log(`Auth service listening on port ${PORT}...`);
+  })
+)
+

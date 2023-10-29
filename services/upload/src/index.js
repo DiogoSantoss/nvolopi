@@ -20,8 +20,6 @@ const app = express();
 app.use(cors()); // for local development
 app.use(bodyParser.json());
 
-db.connect(MONGO_URI);
-
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -102,6 +100,9 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Upload service listening on port ${PORT}...`);
-});
+
+db.connect(MONGO_URI).then(() => 
+  app.listen(PORT, () => {
+    console.log(`Upload service listening on port ${PORT}...`);
+  })
+)
